@@ -2,15 +2,16 @@
 
 #include <IFTTTWebhook.h>
 #include <ESP8266WiFi.h>    //ESP8266
-//#include <WiFi.h>             //ESP32
-//#include <WiFiClientSecure.h> //Secure
 
-#include "C:\GitHub\Cust_WIFI.h"
+#include "C:\GitHub\Cust_WIFI.h"    //wifi setting are in a private file comment this file 
 
-#define ledPin 5 
-#define wakePin 16
+//#define ledPin 5 
+#define ledPin 16
+
+//#define wakePin 16
 
 #define WIFI_Sleeptime 10*60 //5 min
+//#define WIFI_Sleeptime 5      //10 sec
 
 #ifndef ssid 
   #define ssid "xx"
@@ -26,6 +27,10 @@ String postData;
 String value1, value2, value3 = "";
      
 void setup() {
+  
+  //pinMode(ledPin, OUTPUT);
+  //digitalWrite(ledPin, HIGH); 
+          
   Serial.begin(115200);
   while(!Serial) { 
   }
@@ -38,9 +43,7 @@ void setup() {
     {
       if (checkconnectToIFTTT())
       {        
-        pinMode(ledPin, OUTPUT);
-        digitalWrite(ledPin, HIGH);       
-        
+            
         IFTTTWebhook hook(IFTTT_API_KEY, IFTTT_EVENT_NAME);
         hook.trigger();
         
@@ -48,20 +51,20 @@ void setup() {
         if (true)
         {
           //int temp = random(300);
-          int temp = 99;
+          int temp = 22;
                     
           setValue(1,String(temp));
-          setValue(2,"88");
-          setValue(3,"77");
+          setValue(2,"33");
+          setValue(3,"44");
         }
         post();   
-        
         delay(200);    
-        digitalWrite(ledPin, LOW); 
       }
       //WiFi.disconnect();
     }
 
+    //digitalWrite(ledPin, LOW); 
+        
     Serial.print("Sleep: ");
     Serial.print(WIFI_Sleeptime); 
     Serial.println(" sec"); 
